@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입 - Debate</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- SVG 아이콘 정의 -->
+    <svg style="display: none;">
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </symbol>
+    </svg>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="../index.html">
+                      <img src="../images/DEBATE.png" alt="Debate" class="logo-img" />
+                    </a>
+                </div>
+                <nav class="nav">
+                    <a href="../index.html" class="nav-link">홈</a>
+                    <a href="../debate-list.html" class="nav-link">토론 목록</a>
+                </nav>
+                <div class="header-actions">
+                    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <use id="icon-moon" href="#icon-moon" />
+                        </svg>
+                    </button>
+                    <a href="login.html" class="btn btn-outline">로그인</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-box">
+                    <h1>회원가입</h1>
+                    <p class="auth-subtitle">Debate에 가입하고 토론에 참여하세요</p>
+
+                    <form class="auth-form">
+                        <div class="form-group">
+                            <label class="form-label">이메일 *</label>
+                            <div class="input-with-button">
+                                <input type="email" id="email-input" class="form-input" placeholder="이메일을 입력하세요" required>
+                                <button type="button" id="email-check-btn" class="btn btn-outline" style="white-space: nowrap;" onclick="checkEmailDuplicate()">중복확인</button>
+                            </div>
+                            <p class="form-hint" id="email-hint">이메일은 아이디로 사용됩니다</p>
+                            <p class="form-message" id="email-message"></p>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">닉네임 *</label>
+                            <div class="input-with-button">
+                                <input type="text" id="nickname-input" class="form-input" placeholder="닉네임을 입력하세요" required>
+                                <button type="button" id="nickname-check-btn" class="btn btn-outline" style="white-space: nowrap;" onclick="checkNicknameDuplicate()">중복확인</button>
+                            </div>
+                            <p class="form-hint">다른 사용자에게 표시될 이름입니다 (2-20자)</p>
+                            <p class="form-message" id="nickname-message"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">비밀번호 *</label>
+                            <input type="password" class="form-input" placeholder="비밀번호를 입력하세요" required>
+                            <p class="form-hint">영문, 숫자, 특수문자 포함 8자 이상</p>
+                            <p class="form-message"></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">비밀번호 확인 *</label>
+                            <input type="password" class="form-input" placeholder="비밀번호를 다시 입력하세요" required>
+                            <p class="form-message"></p>
+                        </div>
+
+                        
+                        <div class="form-section-terms">
+                            <h3>약관 동의 *</h3>
+                            
+                            <label class="checkbox-label full-width">
+                                <input type="checkbox" required>
+                                <span>전체 동의</span>
+                            </label>
+
+                            <div class="terms-list">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" required>
+                                    <span><a href="#" class="terms-link">이용약관</a> 동의 (필수)</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" required>
+                                    <span><a href="#" class="terms-link">개인정보처리방침</a> 동의 (필수)</span>
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox">
+                                    <span><a href="#" class="terms-link">마케팅 정보 수신</a> 동의 (선택)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;">회원가입</button>
+                    </form>
+
+                    <div class="auth-divider">
+                        <span>또는</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button class="btn-social btn-google">
+                            <span>🔵</span> Google로 가입
+                        </button>
+                        <button class="btn-social btn-kakao">
+                            <span>💬</span> Kakao로 가입
+                        </button>
+                        <p class="social-hint">소셜 로그인은 추후 지원 예정입니다</p>
+                    </div>
+
+                    <div class="auth-footer">
+                        <p>이미 계정이 있으신가요? <a href="login.html">로그인</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Debate</h4>
+                    <p>건설적인 토론을 통한 성장</p>
+                </div>
+                <div class="footer-section">
+                    <h4>이용안내</h4>
+                    <a href="../about.html">소개</a>
+                    <a href="../rules.html">이용규칙</a>
+                </div>
+                <div class="footer-section">
+                    <h4>문의</h4>
+                    <p>contact@debate.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Debate. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60vh;
+            padding: 2rem 0;
+        }
+
+        .auth-box {
+            background-color: var(--bg-primary);
+            border-radius: 0.75rem;
+            padding: 3rem;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .auth-box h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .auth-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .auth-form {
+            margin-bottom: 2rem;
+        }
+
+        .auth-form .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .input-with-button {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-with-button .form-input {
+            flex: 1;
+        }
+
+        .auth-form .form-hint {
+            margin-top: 0.5rem;
+            margin-bottom: 0;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .auth-form .form-message {
+            margin-top: 0.25rem;
+            margin-bottom: 0;
+            min-height: 1rem;
+            line-height: 1.25;
+        }
+
+        .form-section-terms {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--border-color);
+        }
+
+        .form-section-terms h3 {
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .terms-list {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            cursor: pointer;
+        }
+
+        .checkbox-label.full-width {
+            font-weight: 600;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .terms-link {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+
+        .auth-divider {
+            text-align: center;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .auth-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 50%;
+            height: 1px;
+            background-color: var(--border-color);
+        }
+
+        .auth-divider span {
+            background-color: var(--bg-primary);
+            padding: 0 1rem;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .social-login {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-social {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            background-color: var(--bg-primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-social:hover {
+            background-color: var(--bg-secondary);
+        }
+
+        .btn-google {
+            border-color: #4285f4;
+        }
+
+        .btn-kakao {
+            border-color: #fee500;
+        }
+
+        .social-hint {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .auth-footer a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .form-message {
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            min-height: 1rem;
+            line-height: 1.25;
+        }
+
+        .form-message.success {
+            color: #10b981;
+        }
+
+        .form-message.error {
+            color: #ef4444;
+        }
+
+        .form-message.checking {
+            color: var(--text-secondary);
+        }
+
+        .form-input.checked {
+            border-color: #10b981;
+        }
+
+        .form-input.duplicate {
+            border-color: #ef4444;
+        }
+    </style>
+    <script src="../js/theme.js"></script>
+    <script>
+        let emailChecked = false;
+        let nicknameChecked = false;
+
+        function checkEmailDuplicate() {
+            const emailInput = document.getElementById('email-input');
+            const email = emailInput.value.trim();
+            const messageEl = document.getElementById('email-message');
+            const checkBtn = document.getElementById('email-check-btn');
+
+            // 이메일 형식 검증
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                messageEl.textContent = '올바른 이메일 형식을 입력해주세요.';
+                messageEl.className = 'form-message error';
+                emailInput.classList.remove('checked');
+                emailInput.classList.add('duplicate');
+                emailChecked = false;
+                return;
+            }
+
+            // 중복확인 중
+            messageEl.textContent = '확인 중...';
+            messageEl.className = 'form-message checking';
+            checkBtn.disabled = true;
+            checkBtn.textContent = '확인 중...';
+
+            // 실제로는 서버 API를 호출해야 합니다
+            // 여기서는 모의 응답입니다
+            setTimeout(() => {
+                // 모의 응답: 이메일이 중복되지 않은 경우
+                const isDuplicate = false; // 실제로는 API 응답에 따라 결정
+
+                if (isDuplicate) {
+                    messageEl.textContent = '이미 사용 중인 이메일입니다.';
+                    messageEl.className = 'form-message error';
+                    emailInput.classList.remove('checked');
+                    emailInput.classList.add('duplicate');
+                    emailChecked = false;
+                } else {
+                    messageEl.textContent = '사용 가능한 이메일입니다.';
+                    messageEl.className = 'form-message success';
+                    emailInput.classList.remove('duplicate');
+                    emailInput.classList.add('checked');
+                    emailChecked = true;
+                }
+                checkBtn.disabled = false;
+                checkBtn.textContent = '중복확인';
+            }, 500);
+        }
+
+        function checkNicknameDuplicate() {
+            const nicknameInput = document.getElementById('nickname-input');
+            const nickname = nicknameInput.value.trim();
+            const messageEl = document.getElementById('nickname-message');
+            const checkBtn = document.getElementById('nickname-check-btn');
+
+            // 닉네임 길이 검증
+            if (nickname.length < 2 || nickname.length > 20) {
+                messageEl.textContent = '닉네임은 2-20자 사이여야 합니다.';
+                messageEl.className = 'form-message error';
+                nicknameInput.classList.remove('checked');
+                nicknameInput.classList.add('duplicate');
+                nicknameChecked = false;
+                return;
+            }
+
+            // 중복확인 중
+            messageEl.textContent = '확인 중...';
+            messageEl.className = 'form-message checking';
+            checkBtn.disabled = true;
+            checkBtn.textContent = '확인 중...';
+
+            // 실제로는 서버 API를 호출해야 합니다
+            // 여기서는 모의 응답입니다
+            setTimeout(() => {
+                // 모의 응답: 닉네임이 중복되지 않은 경우
+                const isDuplicate = false; // 실제로는 API 응답에 따라 결정
+
+                if (isDuplicate) {
+                    messageEl.textContent = '이미 사용 중인 닉네임입니다.';
+                    messageEl.className = 'form-message error';
+                    nicknameInput.classList.remove('checked');
+                    nicknameInput.classList.add('duplicate');
+                    nicknameChecked = false;
+                } else {
+                    messageEl.textContent = '사용 가능한 닉네임입니다.';
+                    messageEl.className = 'form-message success';
+                    nicknameInput.classList.remove('duplicate');
+                    nicknameInput.classList.add('checked');
+                    nicknameChecked = true;
+                }
+                checkBtn.disabled = false;
+                checkBtn.textContent = '중복확인';
+            }, 500);
+        }
+
+        // 이메일이나 닉네임이 변경되면 중복확인 상태 초기화
+        document.getElementById('email-input').addEventListener('input', function() {
+            emailChecked = false;
+            this.classList.remove('checked', 'duplicate');
+            document.getElementById('email-message').textContent = '';
+        });
+
+        document.getElementById('nickname-input').addEventListener('input', function() {
+            nicknameChecked = false;
+            this.classList.remove('checked', 'duplicate');
+            document.getElementById('nickname-message').textContent = '';
+        });
+
+        // 폼 제출 시 중복확인 여부 확인
+        document.querySelector('.auth-form').addEventListener('submit', function(e) {
+            if (!emailChecked) {
+                e.preventDefault();
+                alert('이메일 중복확인을 해주세요.');
+                return false;
+            }
+            if (!nicknameChecked) {
+                e.preventDefault();
+                alert('닉네임 중복확인을 해주세요.');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>
+

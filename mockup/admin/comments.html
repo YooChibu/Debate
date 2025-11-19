@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댓글 관리 - Debate Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- SVG 아이콘 정의 -->
+    <svg style="display: none;">
+      <symbol id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+      </symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"></circle>
+        <line x1="12" y1="1" x2="12" y2="3"></line>
+        <line x1="12" y1="21" x2="12" y2="23"></line>
+        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+        <line x1="1" y1="12" x2="3" y2="12"></line>
+        <line x1="21" y1="12" x2="23" y2="12"></line>
+        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+      </symbol>
+    </svg>
+    <div class="admin-layout">
+        <aside class="admin-sidebar">
+            <div class="admin-logo">
+                <a href="index.html" style="display: block;">
+                    <img src="../user/images/DEBATE.png" alt="Debate Admin" />
+                </a>
+            </div>
+            <nav class="admin-nav">
+                <a href="index.html" class="nav-item">
+                    <span>📊</span> 대시보드
+                </a>
+                <a href="users.html" class="nav-item">
+                    <span>👥</span> 회원 관리
+                </a>
+                <a href="debate.html" class="nav-item">
+                    <span>💬</span> 토론 관리
+                </a>
+                <a href="comments.html" class="nav-item active">
+                    <span>💭</span> 댓글 관리
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <span>🚨</span> 신고 관리
+                </a>
+                <a href="statistics.html" class="nav-item">
+                    <span>📈</span> 통계 및 분석
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <span>⚙️</span> 시스템 설정
+                </a>
+                <a href="admins.html" class="nav-item">
+                    <span>👤</span> 관리자 관리
+                </a>
+            </nav>
+            <div class="admin-footer">
+                <div class="admin-user">
+                    <div class="admin-avatar">👤</div>
+                    <div class="admin-info">
+                        <div class="admin-name">관리자</div>
+                        <div class="admin-role">슈퍼 관리자</div>
+                    </div>
+                </div>
+                <a href="login.html" class="logout-btn">로그아웃</a>
+            </div>
+        </aside>
+
+        <main class="admin-main">
+            <header class="admin-header">
+                <h2>댓글 관리</h2>
+                <div class="admin-header-actions">
+                    <button id="theme-toggle" class="theme-toggle" onclick="toggleTheme()" aria-label="테마 전환">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <use id="icon-moon" href="#icon-moon" />
+                        </svg>
+                    </button>
+                    <span class="current-time">2025-01-15 14:30</span>
+                </div>
+            </header>
+
+            <div class="admin-content">
+                <!-- 검색 및 필터 -->
+                <div class="admin-toolbar">
+                    <div class="search-box-admin">
+                        <input type="text" placeholder="댓글 내용, 작성자로 검색..." class="search-input-admin">
+                        <button class="btn btn-primary">검색</button>
+                    </div>
+                    <div class="filter-buttons">
+                        <select class="form-select" style="width: auto;">
+                            <option>전체 상태</option>
+                            <option>정상</option>
+                            <option>숨김 처리</option>
+                        </select>
+                        <select class="form-select" style="width: auto;">
+                            <option>정렬: 최신순</option>
+                            <option>오래된순</option>
+                            <option>신고 많은순</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 댓글 목록 -->
+                <div class="admin-table-container">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>토론</th>
+                                <th>작성자</th>
+                                <th>댓글 내용</th>
+                                <th>작성일시</th>
+                                <th>상태</th>
+                                <th>신고</th>
+                                <th>작업</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><a href="../user/debate-detail.html?id=1">AI가 인간의 일자리를...</a></td>
+                                <td>debater1</td>
+                                <td class="comment-preview">AI는 확실히 많은 일자리를 대체할 것입니다. 하지만 우리는 과거 산업혁명을 통해 알 수 있듯이...</td>
+                                <td>2025-01-15 12:30</td>
+                                <td><span class="status-badge status-active">정상</span></td>
+                                <td>0</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                    <button class="btn btn-danger btn-sm">숨김</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td><a href="../user/debate-detail.html?id=1">AI가 인간의 일자리를...</a></td>
+                                <td>thinker2</td>
+                                <td class="comment-preview">동의합니다. 핵심은 우리가 어떻게 AI와 공존할 수 있는지 배우는 것입니다.</td>
+                                <td>2025-01-15 13:15</td>
+                                <td><span class="status-badge status-active">정상</span></td>
+                                <td>0</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                    <button class="btn btn-danger btn-sm">숨김</button>
+                                </td>
+                            </tr>
+                            <tr class="reported">
+                                <td>3</td>
+                                <td><a href="../user/debate-detail.html?id=2">원격 근무가 사무실...</a></td>
+                                <td>spammer1</td>
+                                <td class="comment-preview">부적절한 내용의 댓글입니다...</td>
+                                <td>2025-01-14 15:20</td>
+                                <td><span class="status-badge status-suspended">숨김</span></td>
+                                <td>5</td>
+                                <td>
+                                    <button class="btn btn-outline btn-sm">상세</button>
+                                    <button class="btn btn-danger btn-sm">삭제</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 페이지네이션 -->
+                <div class="pagination">
+                    <a href="#" class="page-link">이전</a>
+                    <a href="#" class="page-link active">1</a>
+                    <a href="#" class="page-link">2</a>
+                    <a href="#" class="page-link">3</a>
+                    <a href="#" class="page-link">다음</a>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="js/theme.js"></script>
+</body>
+</html>

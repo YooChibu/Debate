@@ -1,0 +1,32 @@
+# 프로덕션 환경 설정
+spring:
+  datasource:
+    # 프로덕션 데이터베이스 설정은 환경 변수로 주입
+    # url: ${DB_URL}
+    # username: ${DB_USERNAME}
+    # password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate  # 프로덕션에서는 validate만 사용 (스키마 변경 금지)
+    show-sql: false  # 프로덕션에서는 SQL 로그 비활성화
+
+logging:
+  level:
+    root: INFO
+    com.debate: INFO  # 프로덕션에서는 INFO 레벨만
+
+# 프로덕션 환경용 Actuator 설정 (보안 강화)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info  # health와 info만 노출
+  endpoint:
+    health:
+      show-details: never  # 프로덕션에서는 상세 정보 비공개 (보안)
+  info:
+    env:
+      enabled: false  # 프로덕션에서는 환경 정보 비활성화 (보안)
+
+
