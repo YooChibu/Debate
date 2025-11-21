@@ -236,7 +236,7 @@ const LoginPage = () => {
         <div className="auth-links">
           {/* 회원가입 페이지로 이동하는 링크 */}
           <Link to="/auth/register" className="link-primary">
-            회원가입하기
+            회원가입
           </Link>
 
           {/* 시각적 구분자 */}
