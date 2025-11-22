@@ -39,6 +39,7 @@ public class AuthService {
             throw new BadRequestException("이미 사용 중인 이메일입니다");
         }
 
+
         // 사용자 엔티티 생성
         User user = User.builder()
                 .email(request.getEmail())                                    // 이메일
@@ -60,6 +61,16 @@ public class AuthService {
                 .token(token)                          // JWT 토큰
                 .user(UserResponse.from(user))          // 사용자 정보
                 .build();
+    }
+
+    // [추가] 이메일 중복 확인 (true면 중복)
+    public boolean isEmailDuplicate(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    // [추가] 닉네임 중복 확인 (true면 중복)
+    public boolean isNicknameDuplicate(String nickname) {
+        return userRepository.existsByNickname(nickname);
     }
 
     /**

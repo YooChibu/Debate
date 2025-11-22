@@ -19,6 +19,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import axios from "axios";
 import "./Auth.css";
 
 const RegisterPage = () => {
@@ -197,22 +198,39 @@ const RegisterPage = () => {
    *
    * @param {Event} e - 폼 제출 이벤트
    */
-  // [추가] 가짜 중복 확인 API (나중에 실제 백엔드 API로 교체 필요)
+  /**
+   * 실제 API를 호출하여 중복 여부를 확인하는 함수
+   */
+  // 수정된 checkDuplicateAPI 함수
   const checkDuplicateAPI = async (type, value) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // 테스트 로직: 'test'가 포함되면 중복으로 간주
-        if (value.includes("test")) {
-          reject(
-            new Error(
-              `이미 사용 중인 ${type === "email" ? "이메일" : "닉네임"}입니다.`
-            )
-          );
+    const endpoint =
+      type === "email" ? "/api/auth/check-email" : "/api/auth/check-nickname";
+    const paramName = type;
+
+    try {
+      await axios.get(`${endpoint}?${paramName}=${value}`);
+      return true;
+    } catch (error) {
+      let message = "";
+
+      if (error.response) {
+        // 서버가 응답을 줬는데 에러인 경우 (예: 409 Conflict - 중복)
+        if (error.response.status === 409) {
+          message =
+            error.response.data?.message ||
+            `이미 사용 중인 ${type === "email" ? "이메일" : "닉네임"}입니다.`;
         } else {
-          resolve(true);
+          message = "확인 중 오류가 발생했습니다.";
         }
-      }, 500);
-    });
+      } else if (error.request) {
+        // 요청은 보냈으나 응답을 못 받은 경우 (서버 꺼짐 등)
+        message = "서버와 연결할 수 없습니다.";
+      } else {
+        message = "에러가 발생했습니다.";
+      }
+
+      throw new Error(message);
+    }
   };
 
   // [추가] 이메일 중복 확인 (0.5초 딜레이)

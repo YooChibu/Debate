@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus; // [필요시 import 추가]
 
 /**
  * 인증(Authentication) 관련 REST API 컨트롤러
@@ -34,6 +35,35 @@ public class AuthController {
     public ResponseEntity<ApiResponse<AuthResponse>> register(@Valid @RequestBody RegisterRequest request) {
         AuthResponse response = authService.register(request);
         return ResponseEntity.ok(ApiResponse.success("회원가입이 완료되었습니다", response));
+    }
+    /**
+     * 이메일 중복 확인 API
+     * GET /api/auth/check-email?email=test@example.com
+     */
+    @Operation(summary = "이메일 중복 확인", description = "이메일 사용 가능 여부를 확인합니다.")
+    @GetMapping("/check-email")
+    public ResponseEntity<ApiResponse<Boolean>> checkEmail(@RequestParam String email) {
+        if (authService.isEmailDuplicate(email)) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error("이미 사용 중인 이메일입니다"));
+        }
+        return ResponseEntity.ok(ApiResponse.success("사용 가능한 이메일입니다", true));
+    }
+
+    /**
+     * 닉네임 중복 확인 API
+     * GET /api/auth/check-nickname?nickname=user123
+     */
+    @Operation(summary = "닉네임 중복 확인", description = "닉네임 사용 가능 여부를 확인합니다.")
+    @GetMapping("/check-nickname")
+    public ResponseEntity<ApiResponse<Boolean>> checkNickname(@RequestParam String nickname) {
+        if (authService.isNicknameDuplicate(nickname)) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(ApiResponse.error("이미 사용 중인 닉네임입니다"));
+        }
+        return ResponseEntity.ok(ApiResponse.success("사용 가능한 닉네임입니다", true));
     }
 
     /**
